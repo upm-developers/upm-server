@@ -3,17 +3,22 @@ This is the wiki for upm-server (oh I did totally not know that!)
 These are currently all features of the upm server:
 
 ## Providing packages
-The main purpose of a server is to send the user a package which matches the
-identifier the user specified.  
+The main purpose of a server is to send the user a package when he wants to `upm copy`
 
 For example:  
-user sends to server "give me upm@3.1"
-then the server sends the package back.
+upm copy google.com:upm@3.1 upm
 
-How does the server know which package to return?  
+This will install the package from google.com because we specified the source is at google.com.
+
+_we can also add an alias for that, like upm download, so it looks better_
+
+How does the server know which package to return when it sees "upm@3.1"?  
 It has a list which maps package identifiers to URLs (the packages will usually lie on the server).  
 
-This is good because we can then just use `upm copy`.
+For example one line in the list:
+upm@3.1 = http://google.com/upm/upm_3_1
+
+(Syntax is not important)
 
 ## Taking packages
 
@@ -50,6 +55,8 @@ _Implementation proposal:
 When the server sees that the user wants to copy a package into the server,
 it looks if the package name has an entry in the package-password list,
 if not, generate password, add it to list, send to user, else, ask for password, compare._
+_Implemenation proposal:
+When copying the package into the server, add it to the package-url list_
 
 ## Checked packages
 
@@ -64,8 +71,25 @@ Checked packages can be downloaded, and have been checked by the maintainer.
 
 The maintainer decides whether freshly proposed packages should be `waiting` or `unchecked`.
 
+_Implementation proposal:
+Have an entry in the meta file for the state of the check_
+
 ## Synchronizing between servers
 Maybe the maintainer says, hey i want to have another server in china to deliver faster connections for those who live there.  
 However, he wants his two servers to have the same content. So they have to synchronize.  
 First, both servers have to know each other. Every server has a list of other servers it synchronizes with.  
 Now, if any state changed, the server will notify all other servers in the list.  
+
+## Summary
+Server has three lists:
+ * Package-URL list
+ * PackageName-Password list
+ * SyncServer list
+
+Events:
+ * update package (parameters: identifier of package)  
+for both adding and updating  
+changing check state counts as updating (since, if my proposal is accepted, is modification of meta file)
+triggered by `upm copy` (implementation proposal)
+ * remove package (parameters: identifier of package)
+triggered by `upm remove` (implementation proposal)
