@@ -71,8 +71,11 @@ Checked packages can be downloaded, and have been checked by the maintainer.
 
 The maintainer decides whether freshly proposed packages should be `waiting` or `unchecked`.
 
+Please note, that a newer version of package is a different package and thus has to be checked again, which makes sense.
+
 _Implementation proposal:
-Have an entry in the meta file for the state of the check_
+Have a file which maps package identifier to check state  
+and a command like `upm set-check <package>` to set and get the check state of a package_
 
 ## Synchronizing between servers
 Maybe the maintainer says, hey i want to have another server in china to deliver faster connections for those who live there.  
