@@ -95,7 +95,8 @@ Server has three lists:
 Events:
  * update package (parameters: identifier of package)  
 for both adding and updating  
-changing check state counts as updating (since, if my proposal is accepted, is modification of meta file)
 triggered by `upm copy` (implementation proposal)
  * remove package (parameters: identifier of package)
 triggered by `upm remove` (implementation proposal)
+ * check state of package changed
+triggered by upm set-check
