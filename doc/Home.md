@@ -6,19 +6,20 @@ These are currently all features of the upm server:
 The main purpose of a server is to send the user a package when he wants to `upm copy`
 
 For example:  
-upm copy google.com:upm@3.1 upm
+`upm copy google.com:upm@3.1 upm`
 
-This will install the package from google.com because we specified the source is at google.com.
+This will install the package from `google.com` because we specified the source is at google.com.
 
 _we can also add an alias for that, like upm download, so it looks better_
 
 How does the server know which package to return when it sees "upm@3.1"?  
 It has a list which maps package identifiers to URLs (the packages will usually lie on the server).  
+This list should be a file.  
 
 For example one line in the list:
-upm@3.1 = http://google.com/upm/upm_3_1
+`upm@3.1 = http://google.com/upm/upm_3_1`
 
-(Syntax is not important)
+(Syntax is not important here)
 
 ## Taking packages
 
@@ -30,8 +31,8 @@ That means: he wants to map a package to an identifier.
 
 For example:  
 packager:  
-upm copy ./package google.com:package  
-this proposes the package
+`upm copy ./package google.com:package`  
+this proposes to copy the package
 server:
 give me da password!  
 
@@ -69,7 +70,9 @@ Unchecked packages can be downloaded, though they are not checked. But the user 
 be notified.  
 Checked packages can be downloaded, and have been checked by the maintainer.  
 
-The maintainer decides whether freshly proposed packages should be `waiting` or `unchecked`.
+The maintainer decides whether freshly proposed packages should be `waiting` or `unchecked`.  
+
+Now when someone adds a package, its either waiting `waiting` or `unchecked`, and after that, it waits for the maintainer to be checked so that it can become `checked`
 
 Please note, that a newer version of package is a different package and thus has to be checked again, which makes sense.
 
